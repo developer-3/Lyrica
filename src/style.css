@@ -109,14 +109,19 @@ body {
   background-color: #ffffff;
   transition: border-color 0.25s;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-
+  cursor:pointer;
   margin: 0.5rem;
 }
+
 
 @media (prefers-color-scheme: dark) {
   .sidebar-btn {
     color: #ffffff;
     background-color: #1d1d1d;
+  }
+
+  .create-new:hover {
+    background-color: #eeeeee;
   }
 }
 

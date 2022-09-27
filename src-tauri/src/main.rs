@@ -5,22 +5,35 @@
 
 use std::path::{PathBuf};
 use std::fs::{create_dir, File, self};
-use serde_json::json;
+use std::vec;
+use serde_json::{json};
+use serde::{Serialize, Deserialize};
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+
+#[derive(Serialize, Deserialize)]
+struct Song {
+    title: String,
+    contents: String
+}
+
+#[derive(Serialize, Deserialize)]
+struct Project {
+    title: String,
+    contents: String,
+    file_id: String
+}
 
 #[tauri::command]
 fn save_file(file_id: String, title: String, content: String) -> bool {
     // open file with file_id as file name
-    let mut path = PathBuf::new();
-    path.push(dirs_next::document_dir().unwrap().as_path());
-    path.push("Lyrica");
+    let mut path = get_path();
     path.push(file_id);
 
     // Save contents as json to file
     let data = json!({
         "title": title,
-        "content": content
+        "contents": content
     });
 
     let save = || -> Result<(), std::io::Error> {
@@ -41,9 +54,7 @@ fn save_file(file_id: String, title: String, content: String) -> bool {
 fn create_file() -> String {
     let file_id = uuid::Uuid::new_v4().to_string();
 
-    let mut path = PathBuf::new();
-    path.push(dirs_next::document_dir().unwrap().as_path());
-    path.push("Lyrica");
+    let mut path = get_path();
     path.push(&file_id);
 
     let create_file = || -> Result<(), std::io::Error> {
@@ -56,6 +67,32 @@ fn create_file() -> String {
     }
 
     file_id
+}
+
+#[tauri::command]
+fn load_all_songs() -> Vec<Project> {
+    let mut songs = vec![];
+
+    let path = get_path();
+
+    let mut files: Vec<PathBuf> = vec![];
+    for file in fs::read_dir(path).unwrap() {
+        files.push(file.unwrap().path());
+    }
+
+    for file in files {
+        if file.to_str().unwrap().ends_with(&".DS_Store") {
+            continue;
+        }
+        let data = fs::read_to_string(&file).expect("Unable to read file");
+        let v: Song = serde_json::from_str(&data).unwrap();
+
+        let file_id = file.as_path().file_stem();
+        
+        songs.push(Project{title: v.title, contents: v.contents, file_id: file_id.unwrap().to_str().unwrap().to_string() })
+    }
+
+    songs
 }
 
 fn build_dir() -> PathBuf {
@@ -76,11 +113,19 @@ fn build_dir() -> PathBuf {
     return path;
 }
 
+fn get_path() -> PathBuf {
+    let mut path = PathBuf::new();
+    path.push(dirs_next::document_dir().unwrap().as_path());
+    path.push("Lyrica");
+
+    path
+}
+
 fn main() {
     let _save_dir = build_dir();
 
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![save_file, create_file])
+        .invoke_handler(tauri::generate_handler![save_file, create_file, load_all_songs])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

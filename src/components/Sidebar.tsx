@@ -1,7 +1,21 @@
 import { invoke } from '@tauri-apps/api/tauri'
+import { useEffect, useState } from "react";
 import SidebarButton from "./SidebarButton";
 
-function Sidebar() {
+interface Song {
+  id: String,
+  title: String,
+  contents: String,
+  date: String,
+};
+
+function Sidebar(props: {songs: Song[]}) {
+
+    const [songs, setSongs] = useState<Song[]>([]);
+
+    useEffect(() => {
+      setSongs(props.songs);
+    })
 
     function createFile() {
       invoke("create_file").then((id) => {
@@ -16,10 +30,7 @@ function Sidebar() {
           <button className="create-new" onClick={createFile}>create</button>
         </div>
         <br />
-        <SidebarButton />
-        <SidebarButton />
-        <SidebarButton />
-        <SidebarButton />
+        { songs.map((song, idx) => <SidebarButton song={song} />) }
       </div>
     );
 }

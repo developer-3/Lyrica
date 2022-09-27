@@ -1,13 +1,20 @@
-function SidebarButton() {
+
+interface SongPreview {
+    title: String,
+    contents: String,
+    date: String
+}
+
+function SidebarButton(props: {song: SongPreview}) {
 
     return (
         <div>
             <div className="sidebar-btn">
                 <div className="title-line">
-                    <h3>Title</h3>
-                    <p>9/22/2022</p>
+                    <h3>{props.song.title}</h3>
+                    <p>{props.song.date}</p>
                 </div>
-                <p>Some preview about the stuff</p>
+                <p>{props.song.contents}</p>
             </div>
         </div>
     );
