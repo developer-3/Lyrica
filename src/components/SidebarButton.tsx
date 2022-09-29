@@ -5,10 +5,10 @@ interface SongPreview {
     date: String
 }
 
-function SidebarButton(props: {song: SongPreview}) {
+function SidebarButton(props: {song: SongPreview, handleClick: Function}) {
 
     return (
-        <div>
+        <div onClick={e => props.handleClick(props.song)}>
             <div className="sidebar-btn">
                 <div className="title-line">
                     <h3>{props.song.title}</h3>

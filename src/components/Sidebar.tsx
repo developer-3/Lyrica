@@ -1,26 +1,36 @@
 import { invoke } from '@tauri-apps/api/tauri'
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import SidebarButton from "./SidebarButton";
 
 interface Song {
-  id: String,
+  file_id: String,
   title: String,
   contents: String,
   date: String,
 };
 
-function Sidebar(props: {songs: Song[]}) {
+function Sidebar(props: {songs: Song[], changeSong: Function}) {
 
-    const [songs, setSongs] = useState<Song[]>([]);
-
-    useEffect(() => {
-      setSongs(props.songs);
-    })
+    const [songs, setSongs] = useState<Song[]>(props.songs);
+    const [currentSong, setCurrentSong] = useState<Song>();
 
     function createFile() {
-      invoke("create_file").then((id) => {
-        console.log(id);
-      })
+      invoke("create_file").then((id: any) => {
+        const n_song: Song = {
+          file_id: id,
+          title: "",
+          contents: "",
+          date: ""
+        }
+        setSongs(songs.concat(n_song));
+        openFile(n_song);
+        console.log(songs.length)
+      }).catch(console.error);
+    }
+
+    const openFile = (song: Song) => {
+      setCurrentSong(song);
+      props.changeSong(song);
     }
 
     return (
@@ -30,7 +40,7 @@ function Sidebar(props: {songs: Song[]}) {
           <button className="create-new" onClick={createFile}>create</button>
         </div>
         <br />
-        { songs.map((song, idx) => <SidebarButton song={song} />) }
+        { songs.map((song, idx) => <SidebarButton song={song} handleClick={openFile}/>) }
       </div>
     );
 }

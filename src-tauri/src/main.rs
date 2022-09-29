@@ -66,6 +66,8 @@ fn create_file() -> String {
         println!("file creation failed");
     }
 
+    save_file(file_id.clone(), String::new(), String::new());
+
     file_id
 }
 

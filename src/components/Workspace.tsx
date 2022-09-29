@@ -1,13 +1,25 @@
 import { invoke } from '@tauri-apps/api/tauri'
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
-function Workspace() {
+interface Song {
+    file_id: String,
+    title: string,
+    contents: string
+    date: String,
+};  
+
+function Workspace(props: {song: Song}) {
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
     const titleRef = useRef<HTMLInputElement>(null);
     const contentRef = useRef<HTMLTextAreaElement>(null);
+
+    useEffect(() => {
+        setTitle(props.song.title);
+        setContent(props.song.contents)
+    }, [props.song])
 
     function cursorToContent(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key == "Enter") {
@@ -22,8 +34,10 @@ function Workspace() {
     }
 
     function saveFile() {
+        props.song.title = title;
+        props.song.contents = content;
         const obj = {
-            fileId: "aa9f958d-dfb5-4b1b-b939-18e4d60e12f2",
+            fileId: props.song.file_id,
             title: title,
             content: content
         }

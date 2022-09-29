@@ -96,6 +96,9 @@ body {
 .sidebar-btn > p {
   margin-top: 0;
   color: #ffeeeea0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
 }
 
 .create-new {
