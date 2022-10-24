@@ -2,9 +2,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Song } from "../util/util";
 
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faInfoCircle, faGear } from "@fortawesome/free-solid-svg-icons";
+import { faFile } from "@fortawesome/free-regular-svg-icons"
 
-export default function Landing(props: {songs: Song[]}) {
+export default function Landing(props: {songs: Song[], openSongCallback: CallableFunction}) {
 
     const [songs, setSongs] = useState<Song[]>(props.songs);
 
@@ -13,7 +14,11 @@ export default function Landing(props: {songs: Song[]}) {
     }, [props.songs])
 
     function openRecent(song: Song) {
-        // TODO: implement this
+        props.openSongCallback(song);
+    }
+
+    function openOption(option: string) {
+        // TODO: implement this too please thanks
     }
 
     return (
@@ -26,17 +31,10 @@ export default function Landing(props: {songs: Song[]}) {
                 </div>
                 <div className="actions-panel-right">
                     <h3>Options</h3>
-                    <ul>
-                        <li>
-                        <FontAwesomeIcon icon={faPlus} />New file
-                        </li>
-                        <li>
-                            Open
-                        </li>
-                        <li>
-                            About
-                        </li>
-                    </ul>
+                    <button onClick={() => openOption("new_file")}><FontAwesomeIcon icon={faPlus} /> New file</button>
+                    <button onClick={() => openOption("open")}><FontAwesomeIcon icon={faFile} /> Open</button>
+                    <button onClick={() => openOption("settings")}><FontAwesomeIcon icon={faGear} /> Settings</button>
+                    <button onClick={() => openOption("about")}><FontAwesomeIcon icon={faInfoCircle} /> About</button>
                 </div>
             </div>
         </div>

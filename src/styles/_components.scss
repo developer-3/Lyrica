@@ -1,0 +1,7 @@
+@mixin secondary-btn($color) {
+    border-style: none;
+    font-size: medium;
+    background-color: transparent;
+    color: $color;
+    cursor: pointer;
+}

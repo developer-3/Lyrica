@@ -1,4 +1,5 @@
 @import './styles/variables';
+@import './styles/components';
 
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
@@ -167,8 +168,10 @@ body {
 .landing-wrapper {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 75%;
     align-items: center;
+    justify-content: center;
+    gap: 10rem;
 }
 
 .landing-wrapper > h1 {
@@ -184,24 +187,23 @@ body {
     justify-content: center;
 }
 
-.actions-panel-left > button {
+.actions-panel-left {
     display: flex;
     flex-direction: column;
-    border-style: none;
-    font-size: medium;
-    background-color: transparent;
-    color: $secondary-color;
-    cursor: pointer;
+    align-items: flex-start;
+
+    button {
+        @include secondary-btn($secondary-color);
+    }
 }
 
 .actions-panel-right {
-    ul {
-        margin: 0;
-        list-style: none;
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: start;
 
-    li {
-        color: $secondary-color;
+    button {
+        @include secondary-btn($secondary-color);
     }
 
     h3 {

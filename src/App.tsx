@@ -15,21 +15,30 @@ function App() {
   useEffect(() => {
     invoke('load_all_songs').then((value: any) => {
         console.log("loaded songs")
-      setSongs(value);
-      setCurrentSong(null);
+        setSongs(value);
+        setCurrentSong(null);
     })
     .catch(console.error);
+
+    document.addEventListener('keydown', onKeyDown, true);
   }, [])
 
-  const changeSong = (song: Song) => {
+  const changeSong = (song: Song | null) => {
     setCurrentSong(song);
   }
 
+  const onKeyDown = (e: KeyboardEvent) => {
+    console.log(e.key)
+    if (e.metaKey && e.key === 'k') {
+        changeSong(null);
+    }
+  }
+
   return (
-    <section className="home">
+    <section className="home" id="home">
       <Sidebar key={songs.length} songs={songs} changeSong={changeSong} />
        {/* TODO: Make this an adjustable divider */}
-      { currentSong ? <Workspace song={currentSong} /> : <Landing songs={songs} /> } 
+      { currentSong ? <Workspace song={currentSong} /> : <Landing songs={songs} openSongCallback={changeSong}/> } 
     </section>
   );
 }
