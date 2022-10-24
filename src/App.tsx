@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
-import "./App.scss";
+import "./styles/App.scss";
 import Sidebar from "./components/Sidebar";
 import Workspace from "./components/Workspace";
 import Landing from "./components/Landing";
@@ -29,7 +29,7 @@ function App() {
 
   const onKeyDown = (e: KeyboardEvent) => {
     console.log(e.key)
-    if (e.metaKey && e.key === 'k') {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         changeSong(null);
     }
   }
