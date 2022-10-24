@@ -1,12 +1,7 @@
 import { invoke } from '@tauri-apps/api/tauri'
 import { useState, useRef, useEffect } from "react";
 
-interface Song {
-    file_id: String,
-    title: string,
-    contents: string
-    date: String,
-};  
+import { Song } from "../util/util";
 
 function Workspace(props: {song: Song}) {
 

@@ -9,6 +9,8 @@ use std::vec;
 use serde_json::{json};
 use serde::{Serialize, Deserialize};
 
+use tauri::{CustomMenuItem, Menu, MenuItem, Submenu};
+
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 
 #[derive(Serialize, Deserialize)]
@@ -123,10 +125,25 @@ fn get_path() -> PathBuf {
     path
 }
 
+fn build_menu() -> Menu {
+    let quit = CustomMenuItem::new("quit".to_string(), "Quit     ⌘q");
+    let save = CustomMenuItem::new("save".to_string(), "Save    ⌘s");
+    let submenu = Submenu::new("File", Menu::new().add_item(save).add_item(quit));
+    let menu = Menu::new()
+        .add_native_item(MenuItem::Copy)
+        .add_item(CustomMenuItem::new("hide", "Hide"))
+        .add_submenu(submenu);
+
+    menu
+}
+
 fn main() {
     let _save_dir = build_dir();
 
+    let menu = build_menu();
+
     tauri::Builder::default()
+        .menu(menu)
         .invoke_handler(tauri::generate_handler![save_file, create_file, load_all_songs])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -1,3 +1,5 @@
+@import './styles/variables';
+
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -5,7 +7,7 @@
   font-weight: 400;
 
   color: #0f0f0f;
-  background-color: #f6f6f6;
+  background-color: $bg-light;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -17,7 +19,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     color: #f6f6f6;
-    background-color: #2f2f2f;
+    background-color: $bg-dark;
   }
 
   a:hover {
@@ -60,12 +62,8 @@ body {
 
   gap: 1px;
 
-  overflow:auto;
-  overflow-y: scroll;
-}
-
-.sidebar > h1 {
-  margin-left: 5%;
+  overflow: auto;
+  /* overflow-y: scroll; */
 }
 
 .sidebar-btn {
@@ -85,7 +83,7 @@ body {
 }
 
 .sidebar-btn:hover {
-  border-color: #396cd8;
+  border-color: $secondary-color;
 }
 
 .title-line {
@@ -161,4 +159,52 @@ body {
   margin-top: 2rem;
   font-size: large;
   font-weight: 600;
+}
+
+
+/*------- LANDING --------*/
+
+.landing-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+.landing-wrapper > h1 {
+    font-size: $title-xl;
+}
+
+.actions-panel {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    gap: 30%;
+
+    justify-content: center;
+}
+
+.actions-panel-left > button {
+    display: flex;
+    flex-direction: column;
+    border-style: none;
+    font-size: medium;
+    background-color: transparent;
+    color: $secondary-color;
+    cursor: pointer;
+}
+
+.actions-panel-right {
+    ul {
+        margin: 0;
+        list-style: none;
+    }
+
+    li {
+        color: $secondary-color;
+    }
+
+    h3 {
+        text-align: end;
+    }
 }

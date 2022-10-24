@@ -1,25 +1,22 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
-import "./App.css";
+import "./App.scss";
 import Sidebar from "./components/Sidebar";
 import Workspace from "./components/Workspace";
+import Landing from "./components/Landing";
 
-interface Song {
-  file_id: String,
-  title: string,
-  contents: string
-  date: String,
-};
+import { Song } from "./util/util";
 
 function App() {
 
   const [songs, setSongs] = useState<Song[]>([]);
-  const [currentSong, setCurrentSong] = useState<Song>();
+  const [currentSong, setCurrentSong] = useState<Song | null>();
 
   useEffect(() => {
     invoke('load_all_songs').then((value: any) => {
+        console.log("loaded songs")
       setSongs(value);
-      return;
+      setCurrentSong(null);
     })
     .catch(console.error);
   }, [])
@@ -30,8 +27,9 @@ function App() {
 
   return (
     <section className="home">
-      <Sidebar songs={songs} changeSong={changeSong} />
-      { currentSong ? <Workspace song={currentSong} /> : <h2>Choose a project</h2>} 
+      <Sidebar key={songs.length} songs={songs} changeSong={changeSong} />
+       {/* TODO: Make this an adjustable divider */}
+      { currentSong ? <Workspace song={currentSong} /> : <Landing songs={songs} /> } 
     </section>
   );
 }
