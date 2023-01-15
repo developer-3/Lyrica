@@ -1,11 +1,11 @@
-export {};
+export { type TextBlockInterface };
 
 interface Block {
     content: any;
 }
 
 
-interface TextBlock extends Block {
+interface TextBlockInterface extends Block {
     content: string;
 
     setText(text: string): void;
@@ -17,7 +17,7 @@ interface ChordBlock extends Block {
     setChord(content: string, idx: number): void;
 }
 
-class Text implements TextBlock {
+class Text implements TextBlockInterface {
     content: string;
 
     constructor() {

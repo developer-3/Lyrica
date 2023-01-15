@@ -104,13 +104,11 @@ body {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
-  font-size: 1em;
+  font-size: 1.2rem;
   font-weight: 500;
-  font-family: inherit;
-  color: #0f0f0f;
-  background-color: #ffffff;
-  transition: border-color 0.25s;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+  background: #00000000;
+  transition: color 0.3s, scale 0.3s;
   cursor:pointer;
   margin: 0.5rem;
 }
@@ -123,7 +121,8 @@ body {
   }
 
   .create-new:hover {
-    background-color: #eeeeee;
+    color: $secondary-color;
+    scale: 1.2;
   }
 }
 
@@ -144,7 +143,7 @@ body {
   font-weight: 900;
 
   margin-top: 2rem;
-  margin-left: 5rem;
+  margin-left: 2rem;
 }
 
 .workspace-content {
@@ -208,5 +207,83 @@ body {
 
     h3 {
         text-align: end;
+    }
+}
+
+/*------- DATA --------*/
+
+.text-block-wrapper {
+    margin-inline: 2rem;
+    padding-inline: 8px;
+    cursor: pointer;
+    border-radius: 10px; 
+
+    display: flex;
+    align-items: center;
+
+    transition:  background-color 0.1s ease-in;
+
+    &:hover {
+        background-color:rgba(29, 213, 230, 0.301);
+    }
+}
+
+.text-block {
+    background-color: #0f0f0f00;
+    color: white;
+    outline: none;
+    border: 0;
+    resize: none;
+
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    font-size: large;
+    font-weight: 600;
+    width: 100%;
+    line-height: 25px;
+    height: 100%;
+    cursor: pointer;
+}
+
+.tb-context-menu {
+    background-color: #3e3e3e;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    height: 50px;
+    width: 50px;
+}
+
+
+/*------- Menus --------*/
+
+.toolbar {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    margin-inline: 2rem;
+
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.toolbar-btn {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    font-size: 1em;
+    color: #ffffff;
+    background-color: #ffffff00;
+    transition: scale 0.25s;
+    cursor:pointer;
+    margin: 0.5rem;
+
+
+    &:hover {
+        color: $secondary-color;
+        scale: 1.2;
     }
 }

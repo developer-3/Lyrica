@@ -9,7 +9,8 @@ use std::vec;
 use serde_json::{json};
 use serde::{Serialize, Deserialize};
 
-use tauri::{CustomMenuItem, Menu, MenuItem, Submenu};
+use tauri::{CustomMenuItem, Menu, MenuItem, Submenu, SystemTrayMenu, SystemTrayMenuItem};
+use tauri::SystemTray;
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 
@@ -142,7 +143,17 @@ fn main() {
 
     let menu = build_menu();
 
+    let quit = CustomMenuItem::new("quit".to_string(), "Quit");
+    let hide = CustomMenuItem::new("hide".to_string(), "Hide");
+    let tray_menu = SystemTrayMenu::new()
+        .add_item(quit)
+        .add_native_item(SystemTrayMenuItem::Separator)
+        .add_item(hide);
+    
+    let tray = SystemTray::new().with_menu(tray_menu);
+
     tauri::Builder::default()
+        .system_tray(tray)
         .menu(menu)
         .invoke_handler(tauri::generate_handler![save_file, create_file, load_all_songs])
         .run(tauri::generate_context!())

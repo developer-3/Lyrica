@@ -2,6 +2,8 @@ import { invoke } from '@tauri-apps/api/tauri'
 import { useState, useRef, useEffect } from "react";
 
 import { Song } from "../util/util";
+import TextBlock from './content/TextBlock';
+import Toolbar from './menus/Toolbar';
 
 function Workspace(props: {song: Song}) {
 
@@ -39,16 +41,22 @@ function Workspace(props: {song: Song}) {
         invoke('save_file', obj)
     }
 
+    function deleteFile() {
+        // TODO: implement deletion
+    }
+
     return (
         <div className='workspace'>
             <input className="workspace-title"  
                     ref={titleRef} 
                     value={title} 
-                    placeholder="" 
+                    placeholder="What're you calling this one?" 
                     onChange={(e) => setTitle(e.target.value)} onKeyUp={(e) => cursorToContent(e)}>
             </input>
-            <button className="create-new" onClick={saveFile}>Save</button>
-            <textarea className="workspace-content" ref={contentRef}  value={content} placeholder="" onChange={(e) => setContent(e.target.value)} onKeyUp={(e) => cursorToTitle(e)}/>
+            <Toolbar save={saveFile} delete={deleteFile}/>
+            {/* <button className="create-new" onClick={saveFile}>Save</button> */}
+            {/* <textarea className="workspace-content" ref={contentRef}  value={content} placeholder="" onChange={(e) => setContent(e.target.value)} onKeyUp={(e) => cursorToTitle(e)}/> */}
+            <TextBlock />
         </div>
     );
 
