@@ -251,10 +251,21 @@ body {
     position: absolute;
     top: 10px;
     left: 10px;
-    height: 50px;
-    width: 50px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+
+    
+
 }
 
+.tb-context-menu > p {
+
+    padding-inline: 6px;
+    margin: 0;
+
+    &:hover {
+        background-color: #282828;
+    }
+}
 
 /*------- Menus --------*/
 

@@ -35,20 +35,27 @@ export default function TextBlock() {
     return (
         <div ref={taWrapperRef} className="text-block-wrapper">
             <textarea rows={1} ref={textareaRef} className="text-block" onChange={checkHeight} onClick={handleClick} onContextMenu={handleClick} placeholder="Let your creativity flow here..."></textarea>
-            { clicked ? <Menu x={points.x} /> : null }
+            { clicked ? <Menu x={points.x} y={points.y} /> : null }
         </div>
     )
 }
 
-const Menu = (props: {x: number}) => {
+const Menu = (props: {x: number, y: number}) => {
+
+    const menuDiv = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-
-    })
+        if (menuDiv.current != null) {
+            menuDiv.current.style.left = (props.x).toString() + 'px';
+            menuDiv.current.style.top = (props.y).toString() + 'px';
+        }
+    }, [props.x]);
 
     return (
-      <div className="tb-context-menu">
-        <p>{props.x}</p>
+      <div className="tb-context-menu" ref={menuDiv}>
+        <p>Move</p>
+        <p>Rename</p>
+        <p>Add chords</p>
       </div>
     );
 };
