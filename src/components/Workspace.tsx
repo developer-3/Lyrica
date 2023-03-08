@@ -2,13 +2,17 @@ import { invoke } from '@tauri-apps/api/tauri'
 import { useState, useRef, useEffect } from "react";
 
 import { Song } from "../util/util";
-import TextBlock from './content/TextBlock';
+import { TextBlock, SongSection } from './content/content.all';
 import Toolbar from './menus/Toolbar';
+import { ISection } from './content/section/section';
+
+const ss: ISection[] = [{'header': "verse", 'content': "this is a verse"},{'header': "chorus", 'content': "this is a chorus"}]
 
 function Workspace(props: {song: Song}) {
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [sections, setSections] = useState<ISection[]>(ss)
 
     const titleRef = useRef<HTMLInputElement>(null);
     const contentRef = useRef<HTMLTextAreaElement>(null);
@@ -56,7 +60,11 @@ function Workspace(props: {song: Song}) {
             <Toolbar save={saveFile} delete={deleteFile}/>
             {/* <button className="create-new" onClick={saveFile}>Save</button> */}
             {/* <textarea className="workspace-content" ref={contentRef}  value={content} placeholder="" onChange={(e) => setContent(e.target.value)} onKeyUp={(e) => cursorToTitle(e)}/> */}
-            <TextBlock />
+            <TextBlock content='' />
+            { sections.map((section, idx) => {
+                console.log(idx)
+                return <SongSection content={section.content} header={section.header} />
+            })}
         </div>
     );
 

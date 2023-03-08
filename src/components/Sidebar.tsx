@@ -31,6 +31,8 @@ function Sidebar(props: {songs: Song[], changeSong: Function, key: Number}) {
     const openFile = (song: Song) => {
       setCurrentSong(song);
       props.changeSong(song);
+
+      return;
     }
 
     return (
