@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import DropdownMenu from "./menus/dropdown/Dropdown";
 
 interface SongPreview {
     title: String,
@@ -36,7 +37,7 @@ export default function SidebarButton(props: {song: SongPreview, handleClick: Fu
                 <p>{props.song.contents}</p>
             </div>
 
-            { clicked ? <Menu x={points.x} y={points.y} /> : null }
+            { clicked ? <DropdownMenu x={points.x} y={points.y} /> : null }
         </div>
     );
 }
