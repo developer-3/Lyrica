@@ -6,6 +6,7 @@ import Workspace from "./components/Workspace";
 import Landing from "./components/Landing";
 
 import { Song } from "./util/util";
+import Tabbar from "./components/menus/tabbar/Tabbar";
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
 
   return (
     <section className="home" id="home">
+      <Tabbar />
       <Sidebar key={songs.length} songs={songs} changeSong={changeSong} />
        {/* TODO: Make this an adjustable divider */}
       { currentSong ? <Workspace song={currentSong} /> : <Landing songs={songs} openSongCallback={changeSong}/> } 

@@ -51,6 +51,7 @@ export default function TextBlock(props: ITextBlock) {
                 onContextMenu={handleClick} 
                 placeholder="Let your creativity flow here..."
                 value={content}
+                data-type={props.type}
             />
             { clicked ? <DropdownMenu x={points.x} y={points.y} /> : null }
         </div>

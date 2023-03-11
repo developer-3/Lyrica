@@ -1,0 +1,13 @@
+.songsection {
+    margin-inline: 2rem;
+    border-radius: 5px;
+    padding: 0.5rem;
+
+    &:hover {
+        background-color: #2c2c2c;
+    }
+
+    &:focus-within {
+        background-color: #222222;
+    }
+}

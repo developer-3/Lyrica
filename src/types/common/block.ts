@@ -7,6 +7,7 @@ interface Block {
 
 interface ITextBlock extends Block {
     content: string;
+    type: string;
 
     // setText(text: string): void;
 }
@@ -19,9 +20,11 @@ interface ChordBlock extends Block {
 
 class Text implements ITextBlock {
     content: string;
+    type: string;
 
     constructor() {
         this.content = "";
+        this.type = "";
     }
 
     setText(text: string): void {
