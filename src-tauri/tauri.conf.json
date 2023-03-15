@@ -62,8 +62,10 @@
         "height": 800,
         "resizable": true,
         "title": "lyrica",
-        "width": 1200
+        "width": 1200,
+        "transparent": true
       }
-    ]
+    ],
+    "macOSPrivateApi": true
   }
 }
