@@ -2,9 +2,10 @@ import { invoke } from '@tauri-apps/api/tauri'
 import { useEffect, useState } from "react";
 import SidebarButton from "./SidebarButton";
 
-import { Song } from "../util/util";
+import { Song } from "../../util/util";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import SidebarFile from './SBFile';
 
 function Sidebar(props: {songs: Song[], changeSong: Function, key: Number}) {
 
@@ -42,7 +43,7 @@ function Sidebar(props: {songs: Song[], changeSong: Function, key: Number}) {
                 <button className="create-new" onClick={createFile}><FontAwesomeIcon icon={faPlus} /></button>
             </div>
             <br />
-            { songs.map((song, idx) => <SidebarButton song={song} handleClick={openFile}/>) }
+            { songs.map((song, idx) => <SidebarFile song={song} handleClick={openFile}/>) }
         </div>
     );
 }

@@ -1,13 +1,12 @@
 import { useState } from "react";
-import DropdownMenu from "./menus/dropdown/Dropdown";
 
-interface SongPreview {
+interface ISongPreview {
     title: String,
     contents: String,
     date: String
 }
 
-export default function SidebarButton(props: {song: SongPreview, handleClick: Function}) {
+export default function SidebarFile(props: {song: ISongPreview, handleClick: Function}) {
 
     const [clicked, setClicked] = useState(false);
     const [points, setPoints] = useState({
@@ -28,16 +27,9 @@ export default function SidebarButton(props: {song: SongPreview, handleClick: Fu
     };
 
     return (
-        <div onClick={handleClick} onContextMenu={handleClick}>
-            <div className="sidebar-btn">
-                <div className="title-line">
-                    <h3>{props.song.title}</h3>
-                    <p>{props.song.date}</p>
-                </div>
-                <p>{props.song.contents}</p>
-            </div>
-
-            { clicked ? <DropdownMenu x={points.x} y={points.y} /> : null }
+        <div className="sb-file" onClick={handleClick} >
+            { props.song.title ? <p>{props.song.title}</p> : <p style={{fontStyle: "italic"}}>unnamed</p> }
+            {/* { clicked ? <DropdownMenu x={points.x} y={points.y} /> : null } */}
         </div>
-    );
+    )
 }

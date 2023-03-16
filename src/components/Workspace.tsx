@@ -5,14 +5,19 @@ import { Song } from "../util/util";
 import { TextBlock, SongSection } from './content/content.all';
 import Toolbar from './menus/Toolbar';
 import { ISection } from './content/section/section';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const ss: ISection[] = [{'header': "verse", 'content': "this is a verse"},{'header': "chorus", 'content': "this is a chorus"}]
 
-function Workspace(props: {song: Song}) {
+function Workspace(props: {song: Song, open: Song[], closeSong: CallableFunction}) {
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [sections, setSections] = useState<ISection[]>(ss)
+
+    const [openSongs, setOpenSongs] = useState<Song[]>(props.open);
+    const [currentSong, setCurrentSong] = useState<Song>(props.song);
 
     const titleRef = useRef<HTMLInputElement>(null);
     const contentRef = useRef<HTMLTextAreaElement>(null);
@@ -21,6 +26,15 @@ function Workspace(props: {song: Song}) {
         setTitle(props.song.title);
         setContent(props.song.contents)
     }, [props.song])
+
+    useEffect(() => {
+        setTitle(currentSong.title);
+        setContent(currentSong.contents)
+    }, [currentSong])
+
+    useEffect(() => {
+        setOpenSongs(props.open)
+    }, [props.open])
 
     function cursorToContent(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key == "Enter") {
@@ -49,8 +63,16 @@ function Workspace(props: {song: Song}) {
         // TODO: implement deletion
     }
 
+    function closeFile(file_id: String) {
+        const closed = openSongs.filter((song) => song.file_id != file_id)
+        setOpenSongs(closed);
+        setCurrentSong(closed[closed.length-1]);
+        props.closeSong(closed);
+    }
+
     return (
         <div className='workspace'>
+            <WorkspaceTab openSongs={openSongs} closeFile={closeFile} />
             <input className="workspace-title"  
                     ref={titleRef} 
                     value={title} 
@@ -68,6 +90,33 @@ function Workspace(props: {song: Song}) {
         </div>
     );
 
+}
+
+function WorkspaceTab(props: {openSongs: Song[], closeFile: CallableFunction}) {
+
+    return (
+        <div className="tab-wrapper">
+            { props.openSongs.map((song, idx) => {
+                return <Tab active='true' song={song} close={() => props.closeFile(song.file_id)} />
+            })}
+        </div>
+    )
+}
+
+interface ITab {
+    active: string
+    song: Song
+    close(file_id: String): void
+}
+
+function Tab(props: ITab) {
+
+    return (
+        <div className="tab" data-active={props.active}>
+            <p>{props.song.title}</p>
+            <FontAwesomeIcon icon={faXmark} onClick={() => props.close(props.song.file_id)} />
+        </div>
+    )
 }
 
 export default Workspace;

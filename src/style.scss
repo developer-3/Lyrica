@@ -2,6 +2,7 @@
 @import './styles/components';
 @import './styles/content/section.scss';
 @import './styles/content/tabbar.scss';
+@import './styles/tab/tab.scss';
 @import 'react-tooltip/dist/react-tooltip.css';
 
 :root {
@@ -42,6 +43,7 @@
   flex-direction: row;
   height: 100vh;
   width: 100%;
+  background: linear-gradient(#B3A8ED, #A2EBE7);
 }
 
 html {
@@ -52,13 +54,18 @@ body {
 	height: 100%;
 }
 
+p {
+    margin: 0;
+    padding: 0;
+}
+
 
 /*------- SIDEBAR  --------*/
 
 .sidebar {
-  background-color: #262626;
+  background-color: #26262600;
   height: 100%;
-  width: 25%;
+  width: 20%;
   margin: 0%;
 
   display: flex;
@@ -77,7 +84,7 @@ body {
   font-weight: 500;
   font-family: inherit;
   color: #0f0f0f;
-  background-color: #ffffff;
+  background-color: #ffffff00;
   transition: border-color 0.25s;
   border: 1px solid transparent;
   outline: none;
@@ -97,13 +104,13 @@ body {
   justify-content: space-between;
 }
 
-.sidebar-btn > p {
-  margin-top: 0;
-  color: #ffeeeea0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow:ellipsis;
-}
+// .sidebar-btn > p {
+//   margin-top: 0;
+//   color: #ffeeeea0;
+//   overflow: hidden;
+//   white-space: nowrap;
+//   text-overflow:ellipsis;
+// }
 
 .create-new {
   border-radius: 8px;
@@ -118,11 +125,26 @@ body {
   margin: 0.5rem;
 }
 
+.sb-file {
+    border-radius: 10px;
+    color: black;
+
+    cursor: pointer;
+    padding-inline: 20px;
+    padding-block: 10px;
+
+    margin-inline: 6px;
+    font-weight: 500;
+
+    &:hover {
+        background-color: #ffffff7c;
+    }
+}
 
 @media (prefers-color-scheme: dark) {
   .sidebar-btn {
-    color: #ffffff;
-    background-color: #1d1d1d;
+    // color: #ffffff;
+    // background-color: #1d1d1d;
   }
 
   .create-new:hover {
@@ -134,10 +156,14 @@ body {
 /*  WORKSPACE  */
 
 .workspace {
-  width:75%;
+  background-color: #3e3e3e;
+  width:80%;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: -1px 1px 10px #474747;
 }
 
 .workspace-title {
@@ -306,3 +332,27 @@ body {
         scale: 1.2;
     }
 }
+
+/*------- Titlebar --------*/
+
+.titlebar {
+    height: 30px;
+    background: #329ea3;
+    user-select: none;
+    display: flex;
+    justify-content: flex-end;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  .titlebar-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+  }
+  .titlebar-button:hover {
+    background: #5bbec3;
+  }
